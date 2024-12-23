@@ -1,0 +1,17 @@
+{
+  "name": "nobuild",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "No Build Stack & Asset Pipeline",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "nobuild",
+    "assetpipeline",
+    "rails-inspired"
+  ],
+  "author": "Nima Yonten",
+  "license": "MIT"
+}

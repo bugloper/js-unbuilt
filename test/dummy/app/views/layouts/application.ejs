@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'My App' %></title>
+  
+  <%- stylesheetLinkTag('main') %>
+  <%- javascriptIncludeTag('main') %>
+  
+  <%# Additional stylesheets can be defined in content pages %>
+  <%- typeof extraStyles !== 'undefined' ? extraStyles : '' %>
+</head>
+<body>
+  <header>
+    <%- include('../partials/header') %>
+  </header>
+
+  <main>
+    <%- body %>
+  </main>
+
+  <footer>
+    <%- include('../partials/footer') %>
+  </footer>
+
+  <%# Additional scripts can be defined in content pages %>
+  <%- typeof extraScripts !== 'undefined' ? extraScripts : '' %>
+</body>
+</html>

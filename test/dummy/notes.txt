@@ -1,0 +1,5 @@
+1. HTTP caching
+2. Finger Printing
+3. config and bin folders
+4. bin/precompile.js
+5.  
