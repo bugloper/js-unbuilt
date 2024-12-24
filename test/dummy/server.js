@@ -3,7 +3,6 @@ import expressEjsLayouts from "express-ejs-layouts";
 import unbuilt from "../../index.js";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import crypto from "crypto";
 
 const app = express();
 const currentDir = path.dirname(fileURLToPath(import.meta.url));
