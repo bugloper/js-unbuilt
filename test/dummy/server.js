@@ -11,47 +11,15 @@ const {
   config, 
   stylesheetLinkTag, 
   javascriptIncludeTag, 
-  imageUrl 
+  imageUrl,
+  fingerprint
 } = unbuilt;
-
-// Helper function to generate ETag from file content
-const generateETag = (filePath) => {
-  try {
-    const stats = fs.statSync(filePath);
-    return crypto
-      .createHash('md5')
-      .update(`${stats.size}-${stats.mtime.getTime()}`)
-      .digest('hex');
-  } catch (err) {
-    return crypto.randomBytes(16).toString('hex');
-  }
-};
-
-// Middleware to handle conditional requests
-const conditionalGet = (req, res, next) => {
-  const ifNoneMatch = req.headers['if-none-match'];
-  const ifModifiedSince = req.headers['if-modified-since'];
-
-  if (!res.locals.etag) {
-    return next();
-  }
-
-  if (ifNoneMatch && ifNoneMatch === res.locals.etag) {
-    return res.status(304).end();
-  }
-
-  if (ifModifiedSince && new Date(ifModifiedSince) >= res.locals.lastModified) {
-    return res.status(304).end();
-  }
-
-  next();
-};
 
 app.use(express.static(path.join(currentDir, 'public'), {
   etag: true,
   lastModified: true,
   setHeaders: (res, filePath) => {
-    const etag = generateETag(filePath);
+    const etag = fingerprint(filePath);
     res.setHeader('ETag', `"${etag}"`);
     
     if (filePath.match(/\.(css|js|jpg|jpeg|png|gif|ico|svg)$/)) {
@@ -76,23 +44,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", conditionalGet, (req, res) => {
+app.get("/", (req, res) => {
   const pageData = {
     pageTitle: "Welcome to My App"
   };
-
-  const contentHash = crypto
-    .createHash('md5')
-    .update(JSON.stringify(pageData))
-    .digest('hex');
-  
-  res.locals.etag = `"${contentHash}"`;
-  res.locals.lastModified = new Date();
-
-  res.setHeader('ETag', res.locals.etag);
-  res.setHeader('Last-Modified', res.locals.lastModified.toUTCString());
-  res.setHeader('Cache-Control', 'private, must-revalidate');
-
   res.render("pages/index", pageData);
 });
 
