@@ -1,14 +1,16 @@
 {
-  "name": "nobuild",
+  "name": "unbuilt",
   "version": "0.1.0",
   "type": "module",
-  "description": "No Build Stack & Asset Pipeline",
+  "description": "Rails Asset Pipeline & No Build Stack",
   "main": "index.js",
   "scripts": {
     "test": "test"
   },
   "keywords": [
     "nobuild",
+    "asset",
+    "pipeline",
     "assetpipeline",
     "rails-inspired"
   ],
